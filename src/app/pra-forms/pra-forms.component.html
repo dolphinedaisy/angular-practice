@@ -75,6 +75,25 @@
   </div>
 
 
+  <br>
+  <div>
+    <label> Hobby : </label>
+  </div>
+
+  <div formArrayName="hobbies" *ngFor="let t of hobbies.controls; let i = index">
+    <div class="row" [formGroupName]="i">
+      <div class="col-md-2">
+        <label class="lead">Hobby-{{i+1}}</label>
+      </div>
+      <div class="col-md-5">
+        <input type="text" formControlName='name' [disabled]="true" id="{{'hname'+i}}" class="form-control mb-4" />
+        <input type="checkbox" formControlName='selected' id="{{'selected' + i}}" class="form-control mb-4" />
+      </div>
+
+    </div>
+  </div>
+
+
   <p>Complete the form to enable button.</p>
   <button type="submit">
     Submit
