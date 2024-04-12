@@ -1,103 +1,207 @@
-<form [formGroup]="myForm"
-      (ngSubmit)="onSubmit()">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
   <!-- Form controls go here -->
 
-  <div>
-    <label>
-      Name:
-      <input formControlName="userName" placeholder="Your name">
-    </label>
-  </div>
+  <div class="row m-2">
+    <div class="col-md-8">
+      <div class="row m-2">
+        <div class="col-md-1">
+          <label>Name:</label>
+        </div>
+        <div class="col-md-2">
+          <input
+            class="form-control"
+            formControlName="userName"
+            placeholder="Your name"
+          />
+        </div>
+      </div>
 
-  <div>
-    <label>
-      Email:
-      <input formControlName="userEmail" placeholder="Your email">
-    </label>
-  </div>
+      <div class="row m-2">
+        <div class="col-md-1">
+          <label>Email:</label>
+        </div>
+        <div class="col-md-2">
+          <input
+            class="form-control"
+            formControlName="userEmail"
+            placeholder="Your email"
+          />
+        </div>
+      </div>
 
-  <div formGroupName="address">
-    <label>Address: </label>
+      <ng-container formGroupName="address">
+        <div class="row m-2">
+          <div class="col-md-1">
+            <label>Address:</label>
+          </div>
+        </div>
 
-    <label for="street">Street: </label>
-    <input id="street" type="text" formControlName="street">&nbsp;
+        <div class="row m-2">
+          <div class="col-md-1">
+            <label for="street">Street: </label>
+          </div>
+          <div class="col-md-2">
+            <input
+              id="street"
+              type="text"
+              class="form-control"
+              formControlName="street"
+            />
+          </div>
 
-    <label for="city">City: </label>
-    <input id="city" type="text" formControlName="city">&nbsp;
+          <div class="col-md-1">
+            <label for="city">City: </label>
+          </div>
+          <div class="col-md-2">
+            <input
+              id="city"
+              type="text"
+              class="form-control"
+              formControlName="city"
+            />
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col-md-1">
+            <label for="state">State: </label>
+          </div>
+          <div class="col-md-2">
+            <input
+              id="state"
+              type="text"
+              class="form-control"
+              formControlName="state"
+            />
+          </div>
 
-    <label for="state">State: </label>
-    <input id="state" type="text" formControlName="state">&nbsp;
+          <div class="col-md-1">
+            <label for="zip">Zip Code: </label>
+          </div>
+          <div class="col-md-2">
+            <input
+              id="zip"
+              type="text"
+              class="form-control"
+              formControlName="zip"
+            />
+          </div>
+        </div>
+      </ng-container>
 
-    <label for="zip">Zip Code: </label>
-    <input id="zip" type="text" formControlName="zip">&nbsp;
-  </div>
+      <div class="row m-2">
+        <div class="col-md-1">
+          <label> Aliases: </label>
+        </div>
+        <div class="col-md-2">
+          <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            (click)="addAlias()"
+          >
+            Add Alias
+          </button>
+        </div>
+      </div>
 
+      <div class="row m-2" formArrayName="aliases">
+        <ng-container *ngFor="let alias of aliases.controls; let i = index">
+          <!-- The repeated alias template -->
+          <!-- <div class="row m-2 m-2"> -->
+          <div class="col-md-1">
+            <label for="alias-{{ i }}">Alias {{ i }}: </label>
+          </div>
+          <div class="col-md-2">
+            <input
+              id="alias-{{ i }}"
+              type="text"
+              class="form-control"
+              [formControlName]="i"
+            />
+          </div>
+          <!-- </div> -->
+        </ng-container>
+      </div>
 
-  <div>
-    <label>
-      Aliases:
-      <button type="button" (click)="addAlias()">Add Alias</button>
-    </label>
-  </div>
-  <div formArrayName="aliases">
+      <div class="row m-2">
+        <div class="col-md-1">
+          <label>Item:</label>
+        </div>
 
-    <div *ngFor="let alias of aliases.controls; let i=index">
-      <!-- The repeated alias template -->
-      <label for="alias-{{ i }}">Alias: </label>
-      <input id="alias-{{ i }}" type="text" [formControlName]="i">
+        <div class="col-md-2">
+          <button class="btn btn-primary btn-sm" (click)="addItem()">
+            Add Item
+          </button>
+        </div>
+      </div>
+
+      <div
+        formArrayName="items"
+        *ngFor="let t of items.controls; let i = index"
+      >
+        <div class="row m-2" [formGroupName]="i">
+          <div class="col-md-1">
+            <label>Item-{{ i + 1 }}</label>
+          </div>
+          <div class="col-md-2">
+            <input
+              formControlName="name"
+              class="form-control"
+              id="{{ 'name' + i }}"
+              type="text"
+              class="form-control"
+              placeholder="Enter Name"
+            />
+          </div>
+          <div class="col-md-2">
+            <input
+              formControlName="quantity"
+              class="form-control"
+              id="{{ 'quantity' + i }}"
+              type="number"
+              class="form-control mb-4"
+              placeholder="Enter Age "
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col-md-1">
+          <label>Hobby:</label>
+        </div>
+      </div>
+
+      <ng-container
+        formArrayName="hobbies"
+        *ngFor="let t of hobbies.controls; let i = index"
+      >
+        <div class="row m-2" [formGroupName]="i">
+          <div class="col-md-2">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              [disabled]="true"
+              id="{{ 'hname' + i }}"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-1">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              formControlName="selected"
+              id="{{ 'selected' + i }}"
+            />
+          </div>
+        </div>
+      </ng-container>
+
+      <p>Complete the form to enable button.</p>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+    <div class="col-md-4">
+      <pre>Here - {{ formVal | json }}</pre>
     </div>
   </div>
-
-  <br>
-
-  <div>
-    <label>
-      Item:
-      <button (click)="addItem()">Add Item</button>
-    </label>
-  </div>
-
-  <div formArrayName="items" *ngFor="let t of items.controls; let i = index">
-    <div class="row" [formGroupName]="i">
-      <div class="col-md-2">
-        <label class="lead">Item-{{i+1}}</label>
-      </div>
-      <div class="col-md-5">
-        <input formControlName='name' id="{{'name'+i}}" type="text" class="form-control mb-4"
-               placeholder="Enter Name" />
-      </div>
-      <div class="col-md-5">
-        <input formControlName='quantity' id="{{'quantity' + i}}" type="number" class="form-control mb-4"
-               placeholder="Enter Age " />
-      </div>
-
-    </div>
-  </div>
-
-
-  <br>
-  <div>
-    <label> Hobby : </label>
-  </div>
-
-  <div formArrayName="hobbies" *ngFor="let t of hobbies.controls; let i = index">
-    <div class="row" [formGroupName]="i">
-      <div class="col-md-2">
-        <label class="lead">Hobby-{{i+1}}</label>
-      </div>
-      <div class="col-md-5">
-        <input type="text" formControlName='name' [disabled]="true" id="{{'hname'+i}}" class="form-control mb-4" />
-        <input type="checkbox" formControlName='selected' id="{{'selected' + i}}" class="form-control mb-4" />
-      </div>
-
-    </div>
-  </div>
-
-
-  <p>Complete the form to enable button.</p>
-  <button type="submit">
-    Submit
-  </button>
-  <pre>Here - {{ formVal | json }}</pre>
-
 </form>
