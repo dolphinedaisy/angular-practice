@@ -1,1 +1,54 @@
 <p>pra-forms works!</p>
+
+<form [formGroup]="myForm"
+      (ngSubmit)="onSubmit()">
+  <!-- Form controls go here -->
+
+  <div>
+    <label>
+      Name:
+      <input formControlName="userName" placeholder="Your name">
+    </label>
+  </div>
+
+  <div>
+    <label>
+      Email:
+      <input formControlName="userEmail" placeholder="Your email">
+    </label>
+  </div>
+
+  <div formGroupName="address">
+    <label>Address: </label>
+
+    <label for="street">Street: </label>
+    <input id="street" type="text" formControlName="street">&nbsp;
+
+    <label for="city">City: </label>
+    <input id="city" type="text" formControlName="city">&nbsp;
+
+    <label for="state">State: </label>
+    <input id="state" type="text" formControlName="state">&nbsp;
+
+    <label for="zip">Zip Code: </label>
+    <input id="zip" type="text" formControlName="zip">&nbsp;
+  </div>
+
+
+  <div formArrayName="aliases">
+    <h2>Aliases</h2>
+    <button type="button" (click)="addAlias()">+ Add another alias</button>
+    <div *ngFor="let alias of aliases.controls; let i=index">
+      <!-- The repeated alias template -->
+      <label for="alias-{{ i }}">Alias:</label>
+      <input id="alias-{{ i }}" type="text" [formControlName]="i">
+    </div>
+  </div>
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit">
+    Submit
+  </button>
+  <pre>Here - {{ formVal | json }}</pre>
+
+</form>
