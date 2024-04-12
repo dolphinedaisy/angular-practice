@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PraFormsComponent } from './pra-forms/pra-forms.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { NotFoundComponentComponent } from './not-found-component/not-found-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PraFormsComponent
+    PraFormsComponent,
+    NotFoundComponentComponent
   ],
   imports: [
     BrowserModule,
