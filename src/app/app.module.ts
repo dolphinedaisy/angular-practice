@@ -8,6 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponentComponent } from './not-found-component/not-found-component.component';
 import { RxjsDemoComponentComponent } from './rxjs-demo-component/rxjs-demo-component.component';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiServiceService } from './services/api-service.service';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,14 @@ import { RouterModule } from '@angular/router';
     NotFoundComponentComponent,
     RxjsDemoComponentComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, RouterModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule,
+  ],
+  providers: [ApiServiceService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
