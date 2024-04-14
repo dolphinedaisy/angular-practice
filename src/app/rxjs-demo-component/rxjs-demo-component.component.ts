@@ -17,6 +17,7 @@ export class RxjsDemoComponentComponent {
     this.getStoryById();
     this.postUserStory();
     this.deleteUserStory();
+    this.forkJoinExample();
   }
 
   getCurrentUser() {
@@ -51,5 +52,39 @@ export class RxjsDemoComponentComponent {
     const d = this.service.delteStory(11).subscribe((res) => {
       console.log('Deleted Story res : ', res);
     });
+  }
+
+  forkJoinExample() {
+    this.service.forkJoinPlain().subscribe(
+      (next) => {
+        console.log('forkJoinPlain res : ', next);
+      },
+      (err) => {
+        console.log('forkJoinPlain err : ', err);
+      }
+    );
+
+    // -- If one of the inner observables throws an error, all values are lost and forkJoin doesn’t complete
+    this.service.forkJoinWithErr().subscribe(
+      (next) => {
+        console.log('forkJoinWithErr res : ', next);
+      },
+      (err) => {
+        console.log('forkJoinWithErr err : ', err);
+      }
+    );
+
+    // -- forkJoin completes example
+    this.service.forkJoinDetectComplete().subscribe(
+      (next) => {
+        console.log('forkJoinDetectComplete res : ', next);
+      },
+      (err) => {
+        console.log('forkJoinDetectComplete err : ', err);
+      },
+      () => {
+        console.log('forkJoinDetectComplete - Here FK is Completed');
+      }
+    );
   }
 }

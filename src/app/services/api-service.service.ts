@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { from, Observable, forkJoin, map, catchError } from 'rxjs';
+import {
+  from,
+  Observable,
+  forkJoin,
+  map,
+  catchError,
+  throwError,
+  of,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,17 +43,29 @@ export class ApiServiceService {
     return this.http.delete(this.baseURl + '/posts/' + storyId);
   }
 
-  callOne() {
+  forkJoinPlain() {
     const arrUrl = [
       this.http.get(this.users + '/1'),
-      this.http.get(this.users + '/2'),
-      this.http.get(this.users + '/3'),
+      this.http.get(this.users + '/1/todos'),
     ];
+    return forkJoin(arrUrl);
+  }
 
-    forkJoin(arrUrl).pipe(
-      map(([uOne, uTwo, uThree, uFour]) => {
-        return { uOne, uTwo, uThree, uFour };
-      })
-    );
+  forkJoinWithErr() {
+    const arrUrl = [
+      this.http.get(this.users + '/1'),
+      throwError('Hi I am HERE '),
+      this.http.get(this.users + '/1/todos'),
+    ];
+    return forkJoin(arrUrl);
+  }
+
+  forkJoinDetectComplete() {
+    const arrUrl = [
+      this.http.get(this.users + '/1'),
+      throwError('Hi I am HERE '),
+      this.http.get(this.users + '/1/todos'),
+    ];
+    return forkJoin(arrUrl).pipe(catchError((err) => of(err)));
   }
 }
